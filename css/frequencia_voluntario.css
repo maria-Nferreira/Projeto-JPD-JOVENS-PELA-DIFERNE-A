@@ -1,0 +1,85 @@
+body, html{
+    padding-top: 0;
+    padding-bottom: 1em;
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%);
+}
+
+header {
+    box-sizing: border-box;
+    padding:0 0 ;
+    color: white;
+}
+
+header>i {
+    font-size: 1.04em;
+}
+
+.container-fluid {
+    background: rgba( 255, 255, 255 );
+    box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.5);
+   
+    backdrop-filter: blur( 13.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    
+
+}
+
+
+.frequencia {
+    padding: 0.2em 2em;
+    border-radius: 5px;
+    border: solid rgb(190, 189, 189) 1px;
+}
+
+.botao-salvar {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.2em 2em;
+    font-weight: 500;
+}
+
+
+
+
+/*Media*/
+@media(min-width:200px) and (max-width:576px){
+    header>img {
+        width: 130px;
+        margin-top: 10px;
+    }
+
+    header>h4{
+        font-size: 0.9em;
+    
+    }
+
+    table {
+        font-size:0.8em;
+    }
+}
+
+@media(min-width:600px) and (max-width:768px){
+    
+    header>img {
+        width: 150px;
+    }
+
+    header>h4{
+        font-size: 1em;
+    
+    }
+
+    table {
+        font-size:0.9em;
+    }
+   
+}

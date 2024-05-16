@@ -19,38 +19,37 @@
 
 
   <body>
+    <!--Container-->
     <div class="container">
-      <div class="row">
-        <div class="d-sm-none d-md-block col-md-7 imagem-login">
-          
-        </div>
+      <div class="row"><!--Espaço imagem login e login-->
+        <div class="d-sm-none d-md-block col-md-7 imagem-login"></div><!--Espaço Imagem login-->
 
-        <div class="col-md-5 formulario ">
+        <div class="col-md-5 formulario "><!--Espaço Login-->
           <h3 class="titulo">Login</h3>
           <i>Entre com os seus dados corretamente para acessar o sistema.</i>
-          <form autocomplete="off">
-            <div class="form-floating mb-3 mt-5">
+          <form autocomplete="off"><!--Formulário-->
+            <div class="form-floating mb-3 mt-5"><!--Campo email-->
               <input type="email" class="form-control" id="campo-usuario" name="usuario_voluntario" placeholder="usuario">
               <label for="campo-usuario">Email</label>
-              <span id="email-error"></span>
-            </div>
+            </div><!--Fim campo email-->
 
-            <div class="form-floating">
+            <div class="form-floating"><!--Campo senha-->
               <input type="password" class="form-control" id="campo-senha" name="senha-voluntario"placeholder="Senha">
               <label for="campo-senha">Senha</label>
-              <span id="senha-error"></span>
-            </div>
+            </div><!--Fim campo senha-->
             
+            <!--Botão entrar-->
             <button type="submit" id="botao-logar" class="btn btn-primary mt-4 pt-2 pb-2" value="Entrar">
               Entrar
             </button>
-          </form>
-        </div>
-      </div>
+          </form><!--Fim formulário-->
+
+        </div><!--Fim espaço Login-->
+      </div> <!--Fim espaço imagem login e login-->
     </div>
+    <!--Fim container-->
 
-
-
+    <!--JavaScritp-->
     <script src="js/login.js"></script>
 
 

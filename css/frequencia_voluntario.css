@@ -2,6 +2,7 @@ body, html{
     padding-top: 0;
     padding-bottom: 1em;
     height: 100%;
+
 }
 
 body {
@@ -18,7 +19,11 @@ header>i {
     font-size: 1.04em;
 }
 
-.container-fluid {
+.container {
+    max-width: 800px;
+    min-width: 300px;
+    max-height: 600px;
+    min-height: 470px;
     background: rgba( 255, 255, 255 );
     box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.5);
    
@@ -27,45 +32,90 @@ header>i {
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     display: flex;
     justify-content: center;
-    overflow: auto;
+    padding: 1em 2em 5em 2em;
     
-
+    display: flex;
+    flex-direction: column;
 }
 
 
-.frequencia {
-    padding: 0.2em 2em;
-    border-radius: 5px;
-    border: solid rgb(190, 189, 189) 1px;
-}
-
-.botao-salvar {
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-    padding: 0.2em 2em;
+button.botao-vizualizar,
+button.botao-salvar  {
+    border-radius: 0;
     font-weight: 500;
 }
 
 
+p {
+    margin-bottom: 9px;
+    font-size: 1.2em;
+}
 
 
-/*Media*/
-@media(min-width:200px) and (max-width:576px){
+select {
+    border-radius: 5px;
+    
+    border-color: rgb(211, 206, 206);
+    display: block;
+    margin-bottom: 15px;
+}
+
+select#chamada {
+    padding: 0.5em 1em;
+}
+
+select#lanche {
+    padding: 0.5em 1.5em;
+}
+
+button.botao-salvar {
+    padding: 0.3em 2.7em;
+}
+
+
+
+
+@media (min-width:200px) and (max-width:576px){
+    body {
+        padding: 0 1em;
+    }
+
     header>img {
         width: 130px;
         margin-top: 10px;
     }
 
-    header>h4{
+    header>h4,
+    header>i{
         font-size: 0.9em;
     
     }
 
-    table {
-        font-size:0.8em;
+
+    .container {
+        
+        padding: 1em 2em 1.5em 2em;
+    }
+
+    button.botao-vizualizar,
+    button.botao-salvar  {
+        font-size: 0.9em;
+        
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    select {
+        font-size: 0.9em;
     }
 }
+
 
 @media(min-width:600px) and (max-width:768px){
     
@@ -73,13 +123,27 @@ header>i {
         width: 150px;
     }
 
-    header>h4{
+    header>h4,
+    header>i{
         font-size: 1em;
     
     }
 
-    table {
-        font-size:0.9em;
+    button.botao-vizualizar,
+    button.botao-salvar  {
+        font-size: 0.95em;
+        
     }
-   
-}
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    select {
+        font-size: 0.95em;
+    }
+}   

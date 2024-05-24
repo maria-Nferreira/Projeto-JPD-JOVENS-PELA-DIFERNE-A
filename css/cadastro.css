@@ -19,19 +19,19 @@ header>i {
 }
 
 .container-fluid {
-    
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
     background: rgba( 255, 255, 255 );
     box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.5);
-   
+    display: flex;
+    flex-direction: column;
     backdrop-filter: blur( 13.5px );
     -webkit-backdrop-filter: blur( 13.5px );
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding: 0em 0 3em 0;
 
 }
+
+
+
 
 form {
     max-width: 900px;
@@ -40,6 +40,9 @@ form {
     padding: 0 0em;
     align-self: center;
 }
+
+
+
 
 .container form .row {
     margin-top: 10px;

@@ -31,17 +31,22 @@
             <div class="form-floating mb-3 mt-5"><!--Campo email-->
               <input type="email" class="form-control" id="campo-usuario" name="usuario_voluntario" placeholder="usuario">
               <label for="campo-usuario">Email</label>
+              <span id="email-error"  style="color: red;"></span>
             </div><!--Fim campo email-->
 
             <div class="form-floating"><!--Campo senha-->
               <input type="password" class="form-control" id="campo-senha" name="senha-voluntario"placeholder="Senha">
               <label for="campo-senha">Senha</label>
+              <span id="senha-error" style="color: red;"></span>
             </div><!--Fim campo senha-->
             
             <!--Botão entrar-->
             <button type="submit" id="botao-logar" class="btn btn-primary mt-4 pt-2 pb-2" value="Entrar">
               Entrar
             </button>
+
+
+            <span class="mt-5" id="error-campos"></span>
           </form><!--Fim formulário-->
 
         </div><!--Fim espaço Login-->

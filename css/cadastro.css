@@ -23,6 +23,7 @@ header>i {
     box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
+    align-items: center;
     backdrop-filter: blur( 13.5px );
     -webkit-backdrop-filter: blur( 13.5px );
     border: 1px solid rgba( 255, 255, 255, 0.18 );
@@ -31,14 +32,26 @@ header>i {
 }
 
 
-
-
-form {
+#espaco-formulario {
     max-width: 900px;
     min-width: 300px;
+}
+
+button.botao-voltar {
+    padding: 0.3em 0.5em;
+    border: none;
+    background:none;
+    margin-top: 20px;
+}
+
+button.botao-voltar>i {
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+form {
     box-sizing: border-box;
     padding: 0 0em;
-    align-self: center;
 }
 
 

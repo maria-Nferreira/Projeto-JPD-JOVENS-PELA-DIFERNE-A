@@ -9,16 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
   loginForm.addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+    let email = emailInput.value;
+    let password = passwordInput.value;
 
-    // Limpa mensagens de erro anteriores
-    emailError.innerText = '';
-    passwordError.innerText = '';
-    generalError.innerText = '';
-    emailError.style.display = 'none';
-    passwordError.style.display = 'none';
-    generalError.style.display = 'none';
 
     let emailHasError = false;
     let passwordHasError = false;
@@ -27,10 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!email) {
       displayError(generalError, 'Informe os seus dados');
       return;
-    } else if (!isValidEmail(email)) {
-      displayError(emailError, 'Email incorreto');
-      emailHasError = true;
-    }
+    } 
 
     // Validação do campo de senha
     if (!password) {
@@ -55,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     try {
-      const response = await fetch('https://reqres.in/api/login', {
+      const response = await fetch('https://af54-2804-214-885e-a058-f462-2166-8236-cd2f.ngrok-free.app/api/usuario/signin', {
+        mode: 'cors',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -66,14 +57,17 @@ document.addEventListener('DOMContentLoaded', function() {
         })
       });
 
-      const data = await response.json();
-
+      let data = await response;
+      
       if (!response.ok) {
         throw new Error(data.message || 'Erro no login.');
+      }else{
+        window.location.href = "bemVindo.html";
+
       }
 
       console.log('Login realizado com sucesso:', data);
-      
+
       // Limpar os campos após um login bem-sucedido
       emailInput.value = '';
       passwordInput.value = '';
@@ -81,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Lógica para redirecionar o usuário ou exibir uma mensagem de sucesso
 
     } catch (error) {
-      console.error('Erro:', error);
+      
       // Exibir mensagem de erro genérica
       displayError(emailError, 'Dados incorretos! Por favor, verifique os dados corretamente.');
     }
@@ -99,11 +93,4 @@ document.addEventListener('DOMContentLoaded', function() {
     element.innerText = message;
     element.style.display = 'block';
   }
-});
-
-
-
-
-// Api senha
-// "email":  "eve.holt@reqres.in" 
-// "senha":  "cityslicka" 
+})

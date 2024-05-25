@@ -59,6 +59,7 @@ table {
 .frequencia {
     border-radius: 5px;
     border: none;
+    padding: 0.3em;
 }
 
 button.botao-voltar {

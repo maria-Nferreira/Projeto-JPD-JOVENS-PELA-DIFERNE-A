@@ -36,35 +36,15 @@ table {
     
 }
 
-.formatação-botoes {
-    border: none;
-    padding: 0.3em 1em;
-    font-weight: 500;
-}
-
-.botao-salvar,
-.botao-visualizar {
-    color: #fff;
-    
-}
-
-.botao-salvar {
-    background-color: rgb(28, 126, 184);
-}
-
-.botao-visualizar {
-    background-color: rgb(15, 158, 15);
-}
-
-.frequencia {
-    border-radius: 5px;
-    border: none;
-    padding: 0.3em;
+#espaco-botoes {
+    display: flex;
+    justify-content: space-around;
 }
 
 button.botao-voltar {
     padding: 0.3em 0.5em;
     border: none;
+    color: black;
     background:none;
 }
 
@@ -72,6 +52,57 @@ button.botao-voltar>i {
     margin-right: 10px;
     font-size: 1.5em;
 }
+
+button.botao-buscar-usuarios {
+    border-radius: none;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    padding: 0.5em 1em;
+    background-color: #0d6efd;
+}
+
+
+
+
+button.botao-pesquisar {
+    color: #fff;
+    border: none;
+    color: black;
+    font-size: 1.1em;
+    padding: 0.4em 1em;
+    font-weight: 500;
+}
+
+.botao-salvar,
+.botao-visualizar {
+    color: #fff;
+    border: none;
+    padding: 0.3em 0.9em;
+    
+}
+
+.botao-salvar {
+    background-color: rgb(28, 126, 184);
+    margin-right: 5px;
+    
+}
+
+.botao-visualizar {
+    background-color: rgb(15, 158, 15);
+
+}
+
+
+.frequencia {
+    border-radius: 5px;
+    border: none;
+    padding: 0.3em;
+}
+
+
+
 
 
 .espaco-tabela-frequencia {

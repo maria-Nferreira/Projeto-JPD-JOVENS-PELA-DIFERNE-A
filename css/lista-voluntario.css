@@ -29,11 +29,7 @@ header>i {
     -webkit-backdrop-filter: blur( 13.5px );
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding: 1em 2em 5em 2em;
-}
-
-table {
-    text-align: center;
-    
+    overflow: auto;
 }
 
 #espaco-botoes {
@@ -75,42 +71,25 @@ button.botao-pesquisar {
     font-weight: 500;
 }
 
-.botao-salvar {
+.botao-editar,
+.botao-deletar {
     color: #fff;
     border: none;
     font-weight: 500;
     padding: 0.3em 0.9em;
+    
+}
+
+.botao-editar {
     background-color: rgb(28, 126, 184);
     margin-right: 5px;
+    
 }
 
+.botao-deletar {
+    background-color: #dc3545;
 
-.frequencia {
-    border-radius: 5px;
-    border: none;
-    padding: 0.3em;
 }
-
-
-
-
-
-.espaco-tabela-frequencia {
-    overflow: auto;
-}
-
-
-.nome-acao-formatacao, #nome-acao {
-    font-size: 1.3em;
-    font-weight: 500;
-}
-
-#nome-acao {
-    color:gray;
-}
-
-
-
 
 
 
@@ -133,11 +112,17 @@ button.botao-pesquisar {
     button.botao-pesquisar {
         font-size: 0.90em;
     }
-    .botao-salvar {
+    
+    .botao-editar {
         font-size: 0.8em;
-        padding: 0.3em 0.7em;
+
+        margin-bottom: 5px;
     }
 
+    .botao-deletar {
+        font-size: 0.8em;
+        padding: 0.3em 0.5em;
+    }
     
     
 
@@ -149,7 +134,7 @@ button.botao-pesquisar {
 
 
 
-@media(min-width:577px) and (max-width:800px){
+@media(min-width:577px) and (max-width:900px){
     
     header>img {
         width: 150px;
@@ -159,7 +144,7 @@ button.botao-pesquisar {
     header>i{
         font-size: 1em;
     
-    }
+    }   
 
     button.botao-buscar-usuarios {
         font-size: 0.90em;
@@ -169,7 +154,7 @@ button.botao-pesquisar {
     button.botao-pesquisar {
         font-size: 0.90em;
     }
-    
+
     .botao-salvar {
         font-size: 0.9em;
         padding: 0.3em 0.8em;
@@ -180,4 +165,14 @@ button.botao-pesquisar {
         font-size: 1em;
     }
     
+    .botao-editar {
+        font-size: 0.9em;
+
+        margin-bottom: 5px;
+    }
+
+    .botao-deletar {
+        font-size: 0.9em;
+        padding: 0.3em 0.5em;
+    }
 }

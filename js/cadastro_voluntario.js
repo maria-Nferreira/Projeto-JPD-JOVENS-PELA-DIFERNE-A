@@ -1,4 +1,53 @@
-class Voluntario {
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.querySelector('.mb-5');
+  
+    loginForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+  
+      //colocar as variaveis
+  
+      try {
+        const response = await fetch('https://008f-2804-214-869c-7d66-ed16-2fbe-41d5-f6c7.ngrok-free.app/api/usuario', {
+          mode: 'cors',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: "João Pedro Santos",
+            email:"email32@email.com",
+            password:"senha@123",
+            socialName: "Zê",
+            dateBirth: "10/05/1999",
+            tel: "(85) 9 9090-0909"
+          })
+        });
+  
+        let data = await response;
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Erro no login.');
+        }else{
+          console.log(data)
+  
+        }
+  
+        console.log('voluntario cadastrado:', data);
+  
+  
+        // Lógica para redirecionar o usuário ou exibir uma mensagem de sucesso
+  
+      } catch (error) {
+        
+        // Exibir mensagem de erro genérica
+        displayError(emailError, 'Dados incorretos! Por favor, verifique os dados corretamente.');
+      }
+    });
+  
+  })
+
+/*class Voluntario {
     constructor() {
         this.id = 1;
         this.arrayVoluntarios = []; // lista de voluntários
@@ -7,6 +56,7 @@ class Voluntario {
     }
 
     async cadastrar() {
+        
         if (this.editId !== null) {
             return; // Se estiver no modo de edição, não cadastra
         }
@@ -83,16 +133,17 @@ class Voluntario {
     adicionar(voluntario) {
         this.arrayVoluntarios.push(voluntario); // adicionar os campos da lista de voluntario dentro do array
     }
-
+    
     async enviarDadosServidor(voluntario) {
-        const url = 'https://reqres.in/api/users'; // Substitua pela sua URL de endpoint
+        const url = 'https://008f-2804-214-869c-7d66-ed16-2fbe-41d5-f6c7.ngrok-free.app'; // Substitua pela sua URL de endpoint
 
         const options = {
+            mode: 'cors',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(voluntario)
+            body: "{'name': 'João Pedro Santos','email':'email332@email.com','password':'senha@123','socialName': 'Zê','dateBirth': '10/05/1999','tel': '(85) 9 9090-0909'}"
         };
 
         try {
@@ -336,5 +387,8 @@ class Voluntario {
 }
 
 let voluntario = new Voluntario();
+
+
+*/
 
 

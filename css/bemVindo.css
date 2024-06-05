@@ -43,6 +43,7 @@ body {
     flex-direction: column;
     gap: 1.5em;
     position: relative;
+    
 }
 
 .bemVindo>img {
@@ -57,7 +58,7 @@ body {
 
 
 .funcao {
-    border-left: solid 2px white ;
+    border-left: solid 3px white ;
     padding: 2em;
     display: flex;
     flex-direction: column;
@@ -78,17 +79,20 @@ h2 {
 .botoes{
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 20px;
 }
 
 a {
     background: none;
-    border: solid white 2px;
+    border: solid white 3px;
     color: white;
     padding: 0.5em;
-    font-size: 0.90em;
+    font-size: 0.95em;
     font-weight: 500;
     text-decoration: none;
+    display:inline;
+    text-align: center;
     text-transform: uppercase;
     
 }
@@ -109,7 +113,9 @@ a:hover {
 
 
 @media (max-width: 599px) {
-
+    .container {
+        padding: 0 1.5em;
+    }
     .bemVindo {
         box-sizing: border-box;
         padding: 2em;
@@ -129,7 +135,9 @@ a:hover {
         font-family: code;
     }
 
-
+    a{ 
+        font-size: 0.8em;
+    }
 
 
     .funcao {
@@ -215,6 +223,11 @@ a:hover {
         font-weight: 500;
         
     }
+
+    a{ 
+        font-size: 0.85em;
+    }
+
 }
 
 @media (min-width:701px) and (max-width:1000px) {
@@ -244,4 +257,7 @@ a:hover {
         justify-content: space-around;
     }
 
+    a{ 
+        font-size: 0.90em;
+    }
 }

@@ -1,116 +1,142 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let botaoBuscarUsuarios = document.querySelector('.botao-buscar-usuarios');
-    botaoBuscarUsuarios.addEventListener('click', buscarUsuarios);
-    let botaoPesquisar = document.querySelector('.botao-pesquisar');
-    botaoPesquisar.addEventListener('click', pesquisarUsuarios);
-    let entradaPesquisa = document.getElementById('entrada-pesquisa');
-    let listaUsuarios = document.getElementById('lista-usuarios');
-    let usuarios = [];
-    async function buscarUsuarios() {
-        try {
-            let resposta = await fetch('https://jsonplaceholder.typicode.com/users'); // Substitua pelo endpoint da sua API
-            if (!resposta.ok) {
-                throw new Error('Erro na resposta da rede: ' + resposta.statusText);
-            }
-            let dados = await resposta.json();
-            if (Array.isArray(dados)) {
-                usuarios = dados;
-                exibirUsuarios(usuarios);
-            } else {
-                throw new Error('Formato de dados inesperado: Não é um array');
-            }
-        } catch (erro) {
-            console.error('Erro ao buscar os dados: ', erro);
+let arrayVoluntario = []; // Inicializa como um array vazio
+let arrayVoluntarioFiltrado = []; // Array para armazenar os resultados filtrados
+
+// Função para buscar os dados dos voluntários de uma API ou banco de dados
+async function buscarDadosVoluntarios() {
+    try {
+        const response = await fetch('URL_DA_API'); // Substitua 'URL_DA_API' pelo endpoint real
+        const dados = await response.json();
+
+        // Verifica se 'dados' é um array
+        if (Array.isArray(dados)) {
+            arrayVoluntario = dados;
+            arrayVoluntarioFiltrado = dados; // Inicialmente, o array filtrado é o mesmo que o array original
+        } else {
+            console.error('Os dados recebidos não são um array:', dados);
         }
-    }
-
-    function pesquisarUsuarios() {
-        let termoPesquisa = entradaPesquisa.value.toLowerCase();
-        let usuariosFiltrados = usuarios.filter(usuario => usuario.name.toLowerCase().includes(termoPesquisa));
-        if (usuariosFiltrados.length === 0) {
-            alert('Nenhum usuário encontrado com esse nome.');
-        }
-        exibirUsuarios(usuariosFiltrados);
-    }
-
-    function exibirUsuarios(usuarios) {
-        listaUsuarios.innerHTML = '';
-        usuarios.forEach(usuario => {
-            let linhaUsuario = criarLinhaUsuario(usuario);
-            listaUsuarios.appendChild(linhaUsuario);
-        });
-    }
-
-    function criarLinhaUsuario(usuario) {
-        let tr = document.createElement('tr');
         
-        let nomeTd = document.createElement('td');
-        nomeTd.textContent = usuario.name;
-        tr.appendChild(nomeTd);
-        
-        let equipeTd = document.createElement('td');
-        equipeTd.textContent = usuario.company.name;
-        tr.appendChild(equipeTd);
+        renderizarListaVoluntarios();
+    } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+    }
+}
 
-        let frequenciaTd = document.createElement('td');
-        let select = document.createElement('select');
-        select.className = 'frequencia select-formatacao';
-        select.innerHTML = `
-            <option value="" selected>Selecione</option>
-            <option value="ok">OK</option>
-            <option value="1_atraso">*</option>
-            <option value="2_atrasos">**</option>
-            <option value="falta">Falta</option>
+// Função para renderizar a lista de voluntários na tabela
+function renderizarListaVoluntarios() {
+    const listaUsuarios = document.getElementById("lista-usuarios");
+    listaUsuarios.innerHTML = ""; // Limpa a tabela
+
+    arrayVoluntarioFiltrado.forEach(voluntario => {
+        const row = document.createElement("tr");
+
+        // Nome
+        const nomeCell = document.createElement("td");
+        nomeCell.textContent = voluntario.nome;
+        nomeCell.classList.add("name-cell");
+        row.appendChild(nomeCell);
+
+        // Equipe
+        const equipeCell = document.createElement("td");
+        equipeCell.textContent = voluntario.equipe;
+        row.appendChild(equipeCell);
+
+        // Frequência
+        const frequenciaCell = document.createElement("td");
+        const selectFrequencia = document.createElement("select");
+        selectFrequencia.innerHTML = `
+            <option value="">Selecione</option>
+            <option value="Presença">Presença</option>
+            <option value="Falta">Falta</option>
+            <option value="Um atraso">Um atraso</option>
+            <option value="Dois atrasos">Dois atrasos</option>
         `;
-        frequenciaTd.appendChild(select);
-        tr.appendChild(frequenciaTd);
+        selectFrequencia.value = voluntario.frequenciaVoluntario;
+        selectFrequencia.addEventListener("change", (e) => atualizarFrequencia(voluntario.id, e.target.value));
+        frequenciaCell.appendChild(selectFrequencia);
+        row.appendChild(frequenciaCell);
 
-        let acoesTd = document.createElement('td');
-        let botaoSalvar = document.createElement('button');
-        botaoSalvar.className = 'botao-salvar';
-        botaoSalvar.innerHTML = `<i class="fa-solid fa-floppy-disk"></i>`;
-        botaoSalvar.addEventListener('click', () => {
-            let frequenciaSelecionada = select.value;
-            if (frequenciaSelecionada) {
-                salvarFrequencia(usuario.id, frequenciaSelecionada);
-            } else {
-                alert('Por favor, selecione uma frequência.');
-            }
-        });
-        acoesTd.appendChild(botaoSalvar);
+        // Ações (botão salvar)
+        const acoesCell = document.createElement("td");
+        const botaoSalvar = document.createElement("button");
+        botaoSalvar.textContent = "Salvar";
+        botaoSalvar.addEventListener("click", () => salvarVoluntario(voluntario.id));
+        acoesCell.appendChild(botaoSalvar);
+        row.appendChild(acoesCell);
 
-        let botaoVisualizar = document.createElement('button');
-        botaoVisualizar.className = 'botao-visualizar';
-        botaoVisualizar.innerHTML = `<i class="fa-solid fa-eye"></i>`;
-        acoesTd.appendChild(botaoVisualizar);
+        listaUsuarios.appendChild(row);
+    });
+}
 
-        tr.appendChild(acoesTd);
-
-        return tr;
+// Função para atualizar a frequência de um voluntário
+function atualizarFrequencia(id, frequencia) {
+    const voluntario = arrayVoluntario.find(v => v.id === id);
+    if (voluntario) {
+        voluntario.frequenciaVoluntario = frequencia;
     }
+}
 
-    function salvarFrequencia(idUsuario, frequencia) {
-        // Implemente a lógica para salvar a frequência do usuário aqui.
-        // Pode ser um envio para uma API ou armazenamento local.
-        // Exemplo de envio para uma API (substitua pelo seu endpoint):
-        fetch(`https://example.com/api/usuarios/${idUsuario}/frequencia`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ frequencia: frequencia })
-        })
-        .then(resposta => {
-            if (!resposta.ok) {
-                throw new Error('Erro ao salvar a frequência: ' + resposta.statusText);
+// Função para salvar as alterações de um voluntário (exemplo de envio para API)
+async function salvarVoluntario(id) {
+    const voluntario = arrayVoluntario.find(v => v.id === id);
+    if (voluntario) {
+        try {
+            const response = await fetch(`URL_DA_API/${id}`, { // Substitua 'URL_DA_API' pelo endpoint real
+                method: 'PUT', // Ou 'POST', conforme a necessidade
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(voluntario)
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao salvar dados');
             }
-            return resposta.json();
-        })
-        .then(dados => {
-            alert('Frequência salva com sucesso!');
-        })
-        .catch(erro => {
-            console.error('Erro ao salvar a frequência: ', erro);
-        });
+            alert('Dados salvos com sucesso!');
+        } catch (error) {
+            console.error('Erro ao salvar dados:', error);
+            alert('Erro ao salvar dados.');
+        }
     }
+}
+
+// Função para pesquisar voluntários pelo nome da ação
+function pesquisarVoluntarios() {
+    const termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
+    arrayVoluntarioFiltrado = arrayVoluntario.filter(voluntario => 
+        voluntario.nomeAcao.toLowerCase().includes(termoPesquisa)
+    );
+    renderizarListaVoluntarios();
+}
+
+// Função para pesquisar ações pelo nome
+function pesquisarAcoes() {
+    const termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
+    const acoesFiltradas = arrayAcoes.filter(acao =>
+        acao.nome.toLowerCase().includes(termoPesquisa)
+    );
+    renderizarListaAcoes(acoesFiltradas);
+}
+
+// Função para renderizar lista de ações
+function renderizarListaAcoes(acoes) {
+    const listaAcoes = document.getElementById("lista-acoes");
+    listaAcoes.innerHTML = ""; // Limpar a lista de ações
+
+    acoes.forEach(acao => {
+        const itemAcao = document.createElement("li");
+        itemAcao.textContent = `Nome: ${acao.nome}, Equipe: ${acao.equipe}`;
+        itemAcao.addEventListener("click", () => selecionarAcao(acao.nome));
+        listaAcoes.appendChild(itemAcao);
+    });
+}
+
+// Função para selecionar ação e atualizar o span nome-acao
+function selecionarAcao(nomeAcao) {
+    const spanNomeAcao = document.getElementById("nome-acao");
+    spanNomeAcao.textContent = nomeAcao;
+}
+
+// Inicialização
+document.addEventListener("DOMContentLoaded", () => {
+    buscarDadosVoluntarios(); // Buscar dados ao carregar a página
 });

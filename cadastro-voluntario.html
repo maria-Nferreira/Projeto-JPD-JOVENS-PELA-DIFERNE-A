@@ -32,7 +32,7 @@
 
 
     <!--Container-->
-    <div class="container-fluid mt-4 ">
+    <div class="container mt-4 ">
         <section id="espaco-formulario"><!--Espaço formulário-->
             <a href="bemVindo.html"> 
                 <button class=" botao-voltar">
@@ -190,7 +190,7 @@
                     </div><!--Fim campo em qual setor-->
     
                     <div class="col-md-6"><!--Campo membro auxiliar-->
-                        <label for="campo-coordenador-setor" class="form-label select">Membro Auxiliar</label>
+                        <label for="campo-coordenador-setor" class="form-label select">Em qual setor?</label>
                         <select name="coordenador_funcao" id="campo-coordenador-setor" class="form-control" disabled>
                             <option selected>-----</option>
                             <option value="planejamento">Planejamento</option>
@@ -206,8 +206,14 @@
                 </div>
                 <!--Fim espaço campo em qual setor e membro auxiliar-->
     
-    
-    
+                <div class="row">
+                    <div class="col-md-6" id="espaco-avulso"></div>
+                    <div class="col-md-6 form-floating">
+                        <input type="text" class="form-control" name="nome_voluntario" id="campo-senha" disabled>
+                        <label for="campo-senha">Definir senha* </label>
+                    </div>
+                </div>
+                
                <!--Botão salvar-->
                <section class="botao">
                     <button class="btn btn-primary mt-5 cadastrar" name="salvar_voluntario" id="editar" onclick="voluntario.cadastrar()">
@@ -217,37 +223,6 @@
             </form> <!--Fim formulário-->
         </section>
         
-
-
-
-        <!--Tabela-->
-        <section id="espaco-tabela" class="none"> <!--Espaco tabela-->
-            <table class="table table-striped table-bordered" id="tabela">
-                <thead class="table-secondary text-center">
-                    <tr>
-                        <th>Nome completo</th>
-                        <th>Nome social</th>
-                        <th>Gênero</th>
-                        <th>Pronomes</th>
-                        <th>Data de nascimento</th>
-                        <th>Email</th>
-                        <th>Telefone(Principal)</th>
-                        <th>Telefone(Para emergência)</th>
-                        <th>Data de ingressão da ONG</th>
-                        <th>Equipe</th>
-                        <th>Número de ações</th>
-                        <th>Membro de setor</th>
-                        <th>Em qual setor</th>
-                        <th>Coodernador</th>
-                        <th>Coodernador setor</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela_voluntario" class="text-center">
-                
-                </tbody>
-            </table>
-        </section> <!--Fim espaço tabela-->
     </div>
     <!--Fim container-->
 
@@ -273,14 +248,19 @@
         //habilitando o campo coordenador função
         let simCoordenador = document.getElementsByName('coordenador');
         let coordenadorSetor = document.getElementById('campo-coordenador-setor');
+        let campoSenha = document.getElementById('campo-senha');
 
         coordenadorSetor.disabled = true;
+        campoSenha.disabled = true;
 
         for (let i = 0; i < simCoordenador.length; i++) {
             simCoordenador[i].addEventListener('change', function() {
-                coordenadorSetor.disabled = !simCoordenador[0].checked;
+            coordenadorSetor.disabled = !simCoordenador[0].checked;
+            campoSenha.disabled = !simCoordenador[0].checked;
             });
         }
+
+        
 
     </script>
 

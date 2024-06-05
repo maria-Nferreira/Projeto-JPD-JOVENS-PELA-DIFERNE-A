@@ -27,22 +27,30 @@
 
     <div class="container mt-4">
         <section id="espaco-botoes" class="mb-5 mt-4 text-center">
+           <div class="col-md-6">
             <a href="bemVindo.html">
                 <button class="botao-voltar">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
             </a>
-            <button class="botao-buscar-usuarios">
-                <i class="fa-solid fa-sync"></i> Carregar Usuários
-            </button>
+           </div>
+           <div class="col-md-6"></div>
         </section>
 
         <section class="mb-5 mt-5 text-center">
+            <h3 class="mb-5">Buscar ação</h3>
             <input type="text" id="entrada-pesquisa" class="form-control d-inline-block w-50" placeholder="Pesquisar por nome">
             <button  class="botao-pesquisar">
                 <i class="fa-solid fa-search"></i> Pesquisar
             </button>
+            
         </section>
+
+        <section class="text-center mb-4">
+            <span class="nome-acao-formatacao mt-4" >Nome da ação: </span><span id="nome-acao"></span>
+        </section>
+
+
 
         <section class="espaco-tabela-frequencia">
             <table class="table table-striped">

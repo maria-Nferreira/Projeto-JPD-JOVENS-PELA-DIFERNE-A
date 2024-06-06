@@ -29,7 +29,7 @@ body {
     max-width: 900px;
     min-width: 300px;
     animation-name: animacao;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-delay: 0;
     animation-direction: alternate;
     

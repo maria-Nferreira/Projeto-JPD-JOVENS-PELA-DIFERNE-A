@@ -5,7 +5,7 @@ body, html {
 }
 
 body {
-    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%);
+    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%) fixed;
 }
 
 header {

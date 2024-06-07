@@ -36,7 +36,10 @@ header>i {
     display: flex;
     justify-content: space-around;
 }
-
+#espaco-botao-carregar{
+    display: flex;
+    justify-content: center;
+}
 button.botao-voltar {
     padding: 0.3em 0.5em;
     border: none;
@@ -112,7 +115,9 @@ button.botao-pesquisar {
     button.botao-pesquisar {
         font-size: 0.90em;
     }
-    
+    #espaco-botoes {
+        justify-content: space-between;
+    }
     .botao-editar {
         font-size: 0.8em;
 
@@ -159,7 +164,9 @@ button.botao-pesquisar {
         font-size: 0.9em;
         padding: 0.3em 0.8em;
     }
-    
+    #espaco-botoes {
+        justify-content: space-between;
+    }
 
     table {
         font-size: 1em;

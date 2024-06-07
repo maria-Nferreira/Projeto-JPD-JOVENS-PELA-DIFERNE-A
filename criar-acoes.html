@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="imagens/logo.png" type="image/x-icon">
     <title>JPD - Criar Ações</title>
-
+    <script src="./js/config.js"></script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/c65af95cbb.js" crossorigin="anonymous"></script>
 
@@ -25,21 +25,21 @@
 
     <div class="container mt-4">
         <section id="espaco-botoes" class="mb-4 mt-4">
-            <a href="bemVindo.html">
-                <button class="botao-voltar">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-            </a>
-            <button class="botao-buscar-usuarios">
-                <i class="fa-solid fa-sync"></i> Carregar voluntários
-            </button>
+            <div class="col-md-6">
+                <a href="bemVindo.html">
+                    <button class="botao-voltar">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-6"></div>
         </section>
 
         <!-- Campo de entrada e botão "Criar ação" -->
-        <section class="mt-5">
-            <input type="text" id="entrada-acao" class="form-control mb-3" placeholder="Digite uma ação">
-            <button class="botao-acao btn btn-primary">Criar ação</button>
-        </section>
+        <form class="mt-5">
+            <input type="text" id="entrada-acao" class="form-control mb-3" placeholder="Digite uma ação" required>
+            <button type="submit" id="create-action" class="botao-acao btn btn-primary">Criar ação</button>
+        </form>
 
         <!-- Contêiner para exibir as ações -->
         <section id="acoesContainer" class="mt-3 mb-5">
@@ -61,9 +61,6 @@
             </tbody>
         </table>
 
-        <div class="text-center mt-4">
-            <button class="btn btn-success botao-enviar-acoes">Enviar Ações</button>
-        </div>
     </div>
 
     <!-- Javascript -->

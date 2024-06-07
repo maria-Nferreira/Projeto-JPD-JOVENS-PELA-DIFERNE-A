@@ -1,10 +1,11 @@
 let arrayVoluntario = []; // Inicializa como um array vazio
 let arrayVoluntarioFiltrado = []; // Array para armazenar os resultados filtrados
+let arrayAcoes = []; // Array para armazenar as ações recuperadas
 
 // Função para buscar os dados dos voluntários de uma API ou banco de dados
 async function buscarDadosVoluntarios() {
     try {
-        const response = await fetch('URL_DA_API'); // Substitua 'URL_DA_API' pelo endpoint real
+        const response = await fetch('URL_DA_API_VOLUNTARIOS'); // Substitua 'URL_DA_API_VOLUNTARIOS' pelo endpoint real
         const dados = await response.json();
 
         // Verifica se 'dados' é um array
@@ -21,28 +22,63 @@ async function buscarDadosVoluntarios() {
     }
 }
 
+// Função para buscar os nomes das ações de uma API ou banco de dados
+async function buscarNomesAcoes() {
+    try {
+        const response = await fetch('URL_DA_API_ACOES'); // Substitua 'URL_DA_API_ACOES' pelo endpoint real
+        const dados = await response.json();
+
+        // Verifica se 'dados' é um array
+        if (Array.isArray(dados)) {
+            arrayAcoes = dados;
+            preencherDropdownAcoes();
+        } else {
+            console.error('Os dados recebidos não são um array:', dados);
+        }
+    } catch (error) {
+        console.error('Erro ao buscar dados das ações:', error);
+    }
+}
+
+// Função para preencher o dropdown com os nomes das ações
+function preencherDropdownAcoes() {
+    let dropdownMenuList = document.getElementById("dropdown-menu-list");
+    dropdownMenuList.innerHTML = ""; // Limpa a lista
+
+    arrayAcoes.forEach(acao => {
+        let listItem = document.createElement("li");
+        let linkItem = document.createElement("a");
+        linkItem.classList.add("dropdown-item");
+        linkItem.href = "#";
+        linkItem.textContent = acao.nome;
+        linkItem.addEventListener("click", () => selecionarAcao(acao.nome, acao.id)); // Passa o id da ação para a função selecionarAcao
+        listItem.appendChild(linkItem);
+        dropdownMenuList.appendChild(listItem);
+    });
+}
+
 // Função para renderizar a lista de voluntários na tabela
 function renderizarListaVoluntarios() {
-    const listaUsuarios = document.getElementById("lista-usuarios");
+    let listaUsuarios = document.getElementById("lista-usuarios");
     listaUsuarios.innerHTML = ""; // Limpa a tabela
 
     arrayVoluntarioFiltrado.forEach(voluntario => {
-        const row = document.createElement("tr");
+        let row = document.createElement("tr");
 
         // Nome
-        const nomeCell = document.createElement("td");
+        let nomeCell = document.createElement("td");
         nomeCell.textContent = voluntario.nome;
         nomeCell.classList.add("name-cell");
         row.appendChild(nomeCell);
 
         // Equipe
-        const equipeCell = document.createElement("td");
+        let equipeCell = document.createElement("td");
         equipeCell.textContent = voluntario.equipe;
         row.appendChild(equipeCell);
 
         // Frequência
-        const frequenciaCell = document.createElement("td");
-        const selectFrequencia = document.createElement("select");
+        let frequenciaCell = document.createElement("td");
+        let selectFrequencia = document.createElement("select");
         selectFrequencia.innerHTML = `
             <option value="">Selecione</option>
             <option value="Presença">Presença</option>
@@ -56,8 +92,8 @@ function renderizarListaVoluntarios() {
         row.appendChild(frequenciaCell);
 
         // Ações (botão salvar)
-        const acoesCell = document.createElement("td");
-        const botaoSalvar = document.createElement("button");
+        let acoesCell = document.createElement("td");
+        let botaoSalvar = document.createElement("button");
         botaoSalvar.textContent = "Salvar";
         botaoSalvar.addEventListener("click", () => salvarVoluntario(voluntario.id));
         acoesCell.appendChild(botaoSalvar);
@@ -69,7 +105,7 @@ function renderizarListaVoluntarios() {
 
 // Função para atualizar a frequência de um voluntário
 function atualizarFrequencia(id, frequencia) {
-    const voluntario = arrayVoluntario.find(v => v.id === id);
+    let voluntario = arrayVoluntario.find(v => v.id === id);
     if (voluntario) {
         voluntario.frequenciaVoluntario = frequencia;
     }
@@ -77,10 +113,10 @@ function atualizarFrequencia(id, frequencia) {
 
 // Função para salvar as alterações de um voluntário (exemplo de envio para API)
 async function salvarVoluntario(id) {
-    const voluntario = arrayVoluntario.find(v => v.id === id);
+    let voluntario = arrayVoluntario.find(v => v.id === id);
     if (voluntario) {
         try {
-            const response = await fetch(`URL_DA_API/${id}`, { // Substitua 'URL_DA_API' pelo endpoint real
+            let response = await fetch(`URL_DA_API_VOLUNTARIOS/${id}`, { // Substitua 'URL_DA_API_VOLUNTARIOS' pelo endpoint real
                 method: 'PUT', // Ou 'POST', conforme a necessidade
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,7 +137,7 @@ async function salvarVoluntario(id) {
 
 // Função para pesquisar voluntários pelo nome da ação
 function pesquisarVoluntarios() {
-    const termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
+    let termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
     arrayVoluntarioFiltrado = arrayVoluntario.filter(voluntario => 
         voluntario.nomeAcao.toLowerCase().includes(termoPesquisa)
     );
@@ -110,8 +146,8 @@ function pesquisarVoluntarios() {
 
 // Função para pesquisar ações pelo nome
 function pesquisarAcoes() {
-    const termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
-    const acoesFiltradas = arrayAcoes.filter(acao =>
+    let termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
+    let acoesFiltradas = arrayAcoes.filter(acao =>
         acao.nome.toLowerCase().includes(termoPesquisa)
     );
     renderizarListaAcoes(acoesFiltradas);
@@ -119,24 +155,47 @@ function pesquisarAcoes() {
 
 // Função para renderizar lista de ações
 function renderizarListaAcoes(acoes) {
-    const listaAcoes = document.getElementById("lista-acoes");
+    let listaAcoes = document.getElementById("lista-acoes");
     listaAcoes.innerHTML = ""; // Limpar a lista de ações
 
     acoes.forEach(acao => {
-        const itemAcao = document.createElement("li");
+        let itemAcao = document.createElement("li");
         itemAcao.textContent = `Nome: ${acao.nome}, Equipe: ${acao.equipe}`;
-        itemAcao.addEventListener("click", () => selecionarAcao(acao.nome));
+        itemAcao.addEventListener("click", () => selecionarAcao(acao.nome, acao.id));
         listaAcoes.appendChild(itemAcao);
     });
 }
 
 // Função para selecionar ação e atualizar o span nome-acao
-function selecionarAcao(nomeAcao) {
-    const spanNomeAcao = document.getElementById("nome-acao");
+async function selecionarAcao(nomeAcao, idAcao) {
+    let spanNomeAcao = document.getElementById("nome-acao");
     spanNomeAcao.textContent = nomeAcao;
+    await buscarVoluntariosPorAcao(idAcao); // Busca os voluntários para a ação selecionada
+}
+
+// Função para buscar os voluntários de uma ação específica
+async function buscarVoluntariosPorAcao(idAcao) {
+    try {
+        let response = await fetch(`URL_DA_API_VOLUNTARIOS_POR_ACAO/${idAcao}`); // Substitua 'URL_DA_API_VOLUNTARIOS_POR_ACAO' pelo endpoint real
+        let dados = await response.json();
+
+        // Verifica se 'dados' é um array
+        if (Array.isArray(dados)) {
+            arrayVoluntarioFiltrado = dados;
+        } else {
+            console.error('Os dados recebidos não são um array:', dados);
+        }
+        
+        renderizarListaVoluntarios();
+    } catch (error) {
+        console.error('Erro ao buscar dados dos voluntários:', error);
+    }
 }
 
 // Inicialização
 document.addEventListener("DOMContentLoaded", () => {
-    buscarDadosVoluntarios(); // Buscar dados ao carregar a página
+    document.getElementById('buscar-acoes').addEventListener('click', () => {
+        document.getElementById('dropdownMenuButton').disabled = false;
+        buscarNomesAcoes(); // Buscar nomes das ações ao clicar no botão
+    });
 });

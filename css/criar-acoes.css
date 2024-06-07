@@ -44,7 +44,7 @@ button.botao-voltar {
     padding: 0.3em 0.5em;
     border: none;
     color: black;
-    background: none;
+    background-color: none;
 }
 
 button.botao-voltar > i {

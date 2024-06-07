@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const emailError = document.getElementById('email-error');
   const passwordError = document.getElementById('senha-error');
   const generalError = document.getElementById('error-campos');
-
+  
   loginForm.addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     try {
-      const response = await fetch('https://af54-2804-214-885e-a058-f462-2166-8236-cd2f.ngrok-free.app/api/usuario/signin', {
+      const response = await fetch(`${configuracaoGlobal.URL}/api/usuario/signin`, {
         mode: 'cors',
         method: 'POST',
         headers: {

@@ -6,7 +6,7 @@ body, html{
 }
 
 body {
-    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%);
+    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%) fixed;
 }
 
 header {
@@ -36,9 +36,16 @@ table {
     
 }
 
+#espaco-acoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
 #espaco-botoes {
     display: flex;
-    justify-content: space-around;
+}
+#espaco-acoes>div.dropdown>button.btn {
+    border-radius: 0;
 }
 
 button.botao-voltar {
@@ -126,10 +133,7 @@ button.botao-pesquisar {
     
     }
 
-    button.botao-buscar-usuarios {
-        font-size: 0.85em;
-        
-    }
+
     button.botao-pesquisar {
         font-size: 0.90em;
     }
@@ -137,7 +141,10 @@ button.botao-pesquisar {
         font-size: 0.8em;
         padding: 0.3em 0.7em;
     }
-
+    
+    #espaco-acoes>div.dropdown>button.btn {
+        font-size: 0.90em;
+    }
     
     
 
@@ -161,10 +168,6 @@ button.botao-pesquisar {
     
     }
 
-    button.botao-buscar-usuarios {
-        font-size: 0.90em;
-        
-    }
 
     button.botao-pesquisar {
         font-size: 0.90em;
@@ -174,7 +177,9 @@ button.botao-pesquisar {
         font-size: 0.9em;
         padding: 0.3em 0.8em;
     }
-    
+    #espaco-acoes>div.dropdown>button.btn {
+        font-size: 0.90em;
+    }
 
     table {
         font-size: 1em;

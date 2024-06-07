@@ -5,7 +5,7 @@ body, html {
 }
 
 body {
-    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%);
+    background: linear-gradient(45deg, rgba(0,141,187,1) 6%, rgba(0,141,187,1) 36%, rgba(0,212,255,1) 100%) fixed;
 }
 
 header {
@@ -33,7 +33,10 @@ header > i {
     display: flex;
     justify-content: space-around;
 }
-
+#espaco-botoes {
+    display: flex;
+    justify-content: space-between;
+}
 button.botao-voltar {
     padding: 0.3em 0.5em;
     border: none;
@@ -64,6 +67,9 @@ button.botao-pesquisar {
     padding: 0.4em 1em;
     font-weight: 500;
 }
+
+
+
 
 .botao-editar,
 .botao-deletar {

@@ -1,17 +1,26 @@
-let arrayVoluntario = []; // Inicializa como um array vazio
-let arrayVoluntarioFiltrado = []; // Array para armazenar os resultados filtrados
-let arrayAcoes = []; // Array para armazenar as ações recuperadas
+let arrayVoluntario = [];
+let arrayVoluntarioFiltrado = [];
+let arrayAcoes = [
+    { id: 1, nome: 'Ação 1' },
+    { id: 2, nome: 'Ação 2' },
+    { id: 3, nome: 'Ação 3' }
+];
+let nomeAcaoSelecionada = '';
 
-// Função para buscar os dados dos voluntários de uma API ou banco de dados
 async function buscarDadosVoluntarios() {
     try {
-        const response = await fetch('URL_DA_API_VOLUNTARIOS'); // Substitua 'URL_DA_API_VOLUNTARIOS' pelo endpoint real
+        const response = await fetch('https://reqres.in/api/users?page=1');
         const dados = await response.json();
 
-        // Verifica se 'dados' é um array
-        if (Array.isArray(dados)) {
-            arrayVoluntario = dados;
-            arrayVoluntarioFiltrado = dados; // Inicialmente, o array filtrado é o mesmo que o array original
+        if (Array.isArray(dados.data)) {
+            arrayVoluntario = dados.data.map(voluntario => ({
+                id: voluntario.id,
+                nome: `${voluntario.first_name} ${voluntario.last_name}`,
+                email: voluntario.email,
+                equipe: 'Equipe A', // Adicionando um valor fixo para a equipe, pois não há essa informação na API
+                frequenciaVoluntario: ''
+            }));
+            arrayVoluntarioFiltrado = arrayVoluntario;
         } else {
             console.error('Os dados recebidos não são um array:', dados);
         }
@@ -22,28 +31,9 @@ async function buscarDadosVoluntarios() {
     }
 }
 
-// Função para buscar os nomes das ações de uma API ou banco de dados
-async function buscarNomesAcoes() {
-    try {
-        const response = await fetch('URL_DA_API_ACOES'); // Substitua 'URL_DA_API_ACOES' pelo endpoint real
-        const dados = await response.json();
-
-        // Verifica se 'dados' é um array
-        if (Array.isArray(dados)) {
-            arrayAcoes = dados;
-            preencherDropdownAcoes();
-        } else {
-            console.error('Os dados recebidos não são um array:', dados);
-        }
-    } catch (error) {
-        console.error('Erro ao buscar dados das ações:', error);
-    }
-}
-
-// Função para preencher o dropdown com os nomes das ações
 function preencherDropdownAcoes() {
     let dropdownMenuList = document.getElementById("dropdown-menu-list");
-    dropdownMenuList.innerHTML = ""; // Limpa a lista
+    dropdownMenuList.innerHTML = "";
 
     arrayAcoes.forEach(acao => {
         let listItem = document.createElement("li");
@@ -51,32 +41,32 @@ function preencherDropdownAcoes() {
         linkItem.classList.add("dropdown-item");
         linkItem.href = "#";
         linkItem.textContent = acao.nome;
-        linkItem.addEventListener("click", () => selecionarAcao(acao.nome, acao.id)); // Passa o id da ação para a função selecionarAcao
+        linkItem.addEventListener("click", () => selecionarAcao(acao.nome, acao.id));
         listItem.appendChild(linkItem);
         dropdownMenuList.appendChild(listItem);
     });
 }
 
-// Função para renderizar a lista de voluntários na tabela
 function renderizarListaVoluntarios() {
     let listaUsuarios = document.getElementById("lista-usuarios");
-    listaUsuarios.innerHTML = ""; // Limpa a tabela
+    listaUsuarios.innerHTML = "";
 
     arrayVoluntarioFiltrado.forEach(voluntario => {
         let row = document.createElement("tr");
 
-        // Nome
         let nomeCell = document.createElement("td");
         nomeCell.textContent = voluntario.nome;
         nomeCell.classList.add("name-cell");
         row.appendChild(nomeCell);
 
-        // Equipe
         let equipeCell = document.createElement("td");
         equipeCell.textContent = voluntario.equipe;
         row.appendChild(equipeCell);
 
-        // Frequência
+        let emailCell = document.createElement("td");
+        emailCell.textContent = voluntario.email;
+        row.appendChild(emailCell);
+
         let frequenciaCell = document.createElement("td");
         let selectFrequencia = document.createElement("select");
         selectFrequencia.innerHTML = `
@@ -91,10 +81,10 @@ function renderizarListaVoluntarios() {
         frequenciaCell.appendChild(selectFrequencia);
         row.appendChild(frequenciaCell);
 
-        // Ações (botão salvar)
         let acoesCell = document.createElement("td");
         let botaoSalvar = document.createElement("button");
         botaoSalvar.textContent = "Salvar";
+        botaoSalvar.classList.add("btn", "btn-primary");
         botaoSalvar.addEventListener("click", () => salvarVoluntario(voluntario.id));
         acoesCell.appendChild(botaoSalvar);
         row.appendChild(acoesCell);
@@ -103,7 +93,6 @@ function renderizarListaVoluntarios() {
     });
 }
 
-// Função para atualizar a frequência de um voluntário
 function atualizarFrequencia(id, frequencia) {
     let voluntario = arrayVoluntario.find(v => v.id === id);
     if (voluntario) {
@@ -111,23 +100,26 @@ function atualizarFrequencia(id, frequencia) {
     }
 }
 
-// Função para salvar as alterações de um voluntário (exemplo de envio para API)
 async function salvarVoluntario(id) {
     let voluntario = arrayVoluntario.find(v => v.id === id);
     if (voluntario) {
         try {
-            let response = await fetch(`URL_DA_API_VOLUNTARIOS/${id}`, { // Substitua 'URL_DA_API_VOLUNTARIOS' pelo endpoint real
-                method: 'PUT', // Ou 'POST', conforme a necessidade
+            const dadosParaSalvar = { ...voluntario, nomeAcao: nomeAcaoSelecionada };
+            console.log('Dados enviados:', dadosParaSalvar);
+            let response = await fetch(`https://reqres.in/api/users/${id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(voluntario)
+                body: JSON.stringify(dadosParaSalvar)
             });
 
             if (!response.ok) {
                 throw new Error('Erro ao salvar dados');
             }
+            console.log(arrayVoluntario);
             alert('Dados salvos com sucesso!');
+
         } catch (error) {
             console.error('Erro ao salvar dados:', error);
             alert('Erro ao salvar dados.');
@@ -135,67 +127,20 @@ async function salvarVoluntario(id) {
     }
 }
 
-// Função para pesquisar voluntários pelo nome da ação
-function pesquisarVoluntarios() {
-    let termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
-    arrayVoluntarioFiltrado = arrayVoluntario.filter(voluntario => 
-        voluntario.nomeAcao.toLowerCase().includes(termoPesquisa)
-    );
+function selecionarAcao(nomeAcao, idAcao) {
+    let spanNomeAcao = document.getElementById("nome-acao");
+    spanNomeAcao.textContent = nomeAcao;
+    nomeAcaoSelecionada = nomeAcao;
+    buscarVoluntariosPorAcao(idAcao);
+}
+
+function buscarVoluntariosPorAcao(idAcao) {
+    // Filtrando voluntários por uma ação específica (exemplo fictício)
+    arrayVoluntarioFiltrado = arrayVoluntario.filter(voluntario => voluntario.equipe === 'Equipe A');
     renderizarListaVoluntarios();
 }
 
-// Função para pesquisar ações pelo nome
-function pesquisarAcoes() {
-    let termoPesquisa = document.getElementById("entrada-pesquisa").value.toLowerCase();
-    let acoesFiltradas = arrayAcoes.filter(acao =>
-        acao.nome.toLowerCase().includes(termoPesquisa)
-    );
-    renderizarListaAcoes(acoesFiltradas);
-}
-
-// Função para renderizar lista de ações
-function renderizarListaAcoes(acoes) {
-    let listaAcoes = document.getElementById("lista-acoes");
-    listaAcoes.innerHTML = ""; // Limpar a lista de ações
-
-    acoes.forEach(acao => {
-        let itemAcao = document.createElement("li");
-        itemAcao.textContent = `Nome: ${acao.nome}, Equipe: ${acao.equipe}`;
-        itemAcao.addEventListener("click", () => selecionarAcao(acao.nome, acao.id));
-        listaAcoes.appendChild(itemAcao);
-    });
-}
-
-// Função para selecionar ação e atualizar o span nome-acao
-async function selecionarAcao(nomeAcao, idAcao) {
-    let spanNomeAcao = document.getElementById("nome-acao");
-    spanNomeAcao.textContent = nomeAcao;
-    await buscarVoluntariosPorAcao(idAcao); // Busca os voluntários para a ação selecionada
-}
-
-// Função para buscar os voluntários de uma ação específica
-async function buscarVoluntariosPorAcao(idAcao) {
-    try {
-        let response = await fetch(`URL_DA_API_VOLUNTARIOS_POR_ACAO/${idAcao}`); // Substitua 'URL_DA_API_VOLUNTARIOS_POR_ACAO' pelo endpoint real
-        let dados = await response.json();
-
-        // Verifica se 'dados' é um array
-        if (Array.isArray(dados)) {
-            arrayVoluntarioFiltrado = dados;
-        } else {
-            console.error('Os dados recebidos não são um array:', dados);
-        }
-        
-        renderizarListaVoluntarios();
-    } catch (error) {
-        console.error('Erro ao buscar dados dos voluntários:', error);
-    }
-}
-
-// Inicialização
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('buscar-acoes').addEventListener('click', () => {
-        document.getElementById('dropdownMenuButton').disabled = false;
-        buscarNomesAcoes(); // Buscar nomes das ações ao clicar no botão
-    });
+    preencherDropdownAcoes();
+    buscarDadosVoluntarios();
 });
